@@ -13,7 +13,8 @@ async function persistPdf(result, title = 'Çalışma Evrakı') {
   const id = Date.now().toString(36);
   const filename = `${safeName(title)}_${id}.pdf`;
   const path = `IsciHaklariPro/Evraklar/${filename}`;
-  await fs.copy({ from: result.pdf.uri, to: path, directory: 'DOCUMENTS' });
+  await fs.mkdir({ path: 'IsciHaklariPro/Evraklar', directory: 'DOCUMENTS', recursive: true });
+  await fs.copy({ from: result.pdf.uri, to: path, toDirectory: 'DOCUMENTS' });
   const fileUri = await fs.getUri({ path, directory: 'DOCUMENTS' });
   const saved = DocumentRepo.add({ title: filename.replace(/\.pdf$/i, ''), filename, path, uri: fileUri.uri, pageCount: result.pdf.pageCount || 1 });
   toast(`Evrak kaydedildi · ${saved.pageCount} sayfa`);
