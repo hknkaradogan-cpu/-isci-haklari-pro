@@ -1,6 +1,6 @@
 # İşçi Hakları Pro
 
-Türkiye'deki çalışanlar, İK ve bordro uzmanları için kıdem, ihbar, yıllık izin, fazla mesai, resmi tatil ve hafta tatili hesaplayıcıları; "İşten ayrılırsam ne kadar alırım?" toplam alacak ekranı; çevrimdışı işçi hakları kütüphanesi; asgari ücret arşivi; hesaplama geçmişi, favoriler, PDF raporlar ve hatırlatıcılar.
+Türkiye'deki çalışanlar, İK ve bordro uzmanları için kıdem, ihbar, yıllık izin, fazla mesai, resmi tatil ve hafta tatili hesaplayıcıları; "İşten ayrılırsam ne kadar alırım?" toplam alacak ekranı; çevrimdışı işçi hakları kütüphanesi; asgari ücret arşivi; hesaplama geçmişi, favoriler, PDF raporlar, hatırlatıcılar ve telefon kamerasıyla çok sayfalı evrak tarama / PDF arşivi.
 
 Tek kod tabanı iki şekilde çalışır:
 
@@ -63,7 +63,7 @@ src/
   features/
     dashboard/  severance/  notice/  annual_leave/  overtime/  holiday_work/  weekend_work/
     quit_calculator/  rights_library/  min_wage/  reports/  history/  favorites/
-    reminders/  settings/
+    reminders/  settings/  documents/ (ML Kit kamera tarama + PDF arşivi)
                         Her hesaplayıcıda engine.js (hesap motoru) + page.js (arayüz)
   main.js  index.html  styles.css
 scripts/build.mjs       Tek dosyalık web uygulaması + PWA üretir
@@ -86,6 +86,10 @@ android/                Capacitor Android projesi
 Gelir vergisi, ödeme ayına kadar oluşan tahmini kümülatif matraha göre dilimli hesaplanır. Ek ödemelerde asgari ücret istisnası uygulanmaz; bu yüzden sonuç ihtiyatlı bir tahmindir.
 
 ---
+
+## Evrak tarama
+
+Android sürümünde Google ML Kit Belge Tarayıcı kullanılır: telefon kamerasıyla sayfa kenarlarını algılama, perspektif düzeltme, kırpma/döndürme, çok sayfalı tarama ve PDF oluşturma. Taranan PDF'ler cihazın Belgeler/IsciHaklariPro/Evraklar klasörüne kopyalanır; uygulama içindeki Evrak Tarama ekranında listelenir ve paylaşılabilir. İlk kullanımda Google Play Hizmetleri tarayıcı modülünü indirebilir; bu ilk indirme için internet gerekir. Tarayıcı Google Play Hizmetleri üzerinden çalışır ve Android 21+, en az 1,7 GB RAM gerektirir. Web sürümünde fotoğraflar PDF'e dönüştürülüp indirilir.
 
 ## 4. Google Play'de yayınlama rehberi
 
