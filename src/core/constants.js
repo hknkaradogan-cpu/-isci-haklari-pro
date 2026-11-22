@@ -66,6 +66,7 @@ export const STORAGE_KEYS = {
   history: 'ihp.history.v1',
   settings: 'ihp.settings.v1',
   reminders: 'ihp.reminders.v1',
+  documents: 'ihp.documents.v1',
 };
 
 export const DISCLAIMER = 'Bu hesaplama bilgilendirme amaçlı bir tahmindir; resmi bordro veya hukuki görüş yerine geçmez. Kesin tutar için işvereninizin bordrosu, bir avukat ya da ALO 170 ile görüşün.';
