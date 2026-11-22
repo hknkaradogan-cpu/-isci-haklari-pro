@@ -12,6 +12,7 @@ const PRIVACY = `<p><b>${APP.name}</b> kişisel verilerinizi toplamaz, sunucular
 <ul><li>Girdiğiniz maaş, tarih ve hesaplama bilgileri yalnızca cihazınızda saklanır.</li>
 <li>Uygulama çalışmak için internet bağlantısına ihtiyaç duymaz.</li>
 <li>Hatırlatıcılar cihazınızın yerel bildirim sistemiyle kurulur.</li>
+<li>Evrak tarama, Google Play Hizmetleri içindeki ML Kit belge tarayıcısını kullanır. Tarama cihazda yapılır; PDF dosyaları telefonunuzun Belgeler/IsciHaklariPro/Evraklar klasöründe saklanır. İlk kullanımda tarayıcı modülünün indirilmesi için internet gerekebilir.</li>
 <li>Uygulamayı kaldırdığınızda veya "Tüm verileri sil" dediğinizde tüm kayıtlar silinir.</li></ul>
 <p>Hesaplamalar bilgilendirme amaçlıdır; hukuki danışmanlık niteliği taşımaz.</p>`;
 
