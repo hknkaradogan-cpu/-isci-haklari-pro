@@ -92,6 +92,13 @@ export default {
         const scanButton = el.querySelector('[data-act="scan"]');
         scanButton.disabled = true; status.textContent = 'Tarayıcı açılıyor…';
         try {
+          const moduleState = await DocumentScanner.isGoogleDocumentScannerModuleAvailable();
+          if (!moduleState.available) {
+            await DocumentScanner.installGoogleDocumentScannerModule();
+            status.textContent = 'Google belge tarayıcısı telefona indiriliyor. İndirme tamamlanınca tekrar Kamerayla Tara düğmesine dokunun.';
+            toast('Tarayıcı bileşeni indirilmeye başlandı.');
+            return;
+          }
           const result = await DocumentScanner.scanDocument({ galleryImportAllowed: true, pageLimit: 20, resultFormats: 'JPEG_PDF', scannerMode: 'FULL' });
           if (result?.pdf) await persistPdf(result, title());
           else status.textContent = 'Tarama iptal edildi.';
