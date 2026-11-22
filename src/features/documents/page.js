@@ -11,7 +11,7 @@ async function persistPdf(result, title = 'Çalışma Evrakı') {
   if (!result?.pdf?.uri) throw new Error('Tarama PDF dosyası oluşturulamadı.');
   const fs = plugin('Filesystem');
   const permissions = await fs.checkPermissions();
-  if (permissions.publicStorage === 'denied') await fs.requestPermissions();
+  if (permissions.publicStorage !== 'granted') await fs.requestPermissions();
   const id = Date.now().toString(36);
   const filename = `${safeName(title)}_${id}.pdf`;
   const path = `IsciHaklariPro/Evraklar/${filename}`;
