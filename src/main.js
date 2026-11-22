@@ -20,11 +20,12 @@ import favorites from './features/favorites/page.js';
 import reports from './features/reports/page.js';
 import reminders from './features/reminders/page.js';
 import settings from './features/settings/page.js';
+import scanner, { saveRestoredScan } from './features/documents/page.js';
 
 {
   registerRoutes({
     dashboard, severance, notice, 'annual-leave': annualLeave, overtime, 'holiday-work': holidayWork,
-    'weekend-work': weekendWork, quit, library, 'min-wage': minWage, history: historyPage, favorites, reports, reminders, settings,
+    'weekend-work': weekendWork, quit, library, 'min-wage': minWage, history: historyPage, favorites, reports, reminders, settings, documents: scanner,
   });
 
   applyTheme();
@@ -46,6 +47,15 @@ import settings from './features/settings/page.js';
   // PWA servis çalışanı (yalnızca normal web sitesinde)
   if (!isNative() && location.protocol === 'https:' && 'serviceWorker' in navigator && !location.hostname.endsWith('claude.ai') && !location.hostname.includes('claudeusercontent')) {
     navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
+
+  if (isNative()) {
+    const appPlugin = window.Capacitor?.Plugins?.App;
+    appPlugin?.addListener?.('appRestoredResult', async (event) => {
+      if (event.pluginId === 'DocumentScanner' && event.methodName === 'scanDocument' && event.success) {
+        await saveRestoredScan(event.data);
+      }
+    });
   }
 
   ensureLegalReminders();
