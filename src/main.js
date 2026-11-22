@@ -4,6 +4,7 @@ import { iconSprite } from './shared/icons.js';
 import { icon } from './shared/ui.js';
 import { ensureLegalReminders, checkDueReminders, rescheduleAll } from './core/notifications.js';
 import { isNative } from './core/platform.js';
+import { App } from '@capacitor/app';
 
 import dashboard from './features/dashboard/page.js';
 import severance from './features/severance/page.js';
@@ -50,8 +51,7 @@ import scanner, { saveRestoredScan } from './features/documents/page.js';
   }
 
   if (isNative()) {
-    const appPlugin = window.Capacitor?.Plugins?.App;
-    appPlugin?.addListener?.('appRestoredResult', async (event) => {
+    App.addListener('appRestoredResult', async (event) => {
       if (event.pluginId === 'DocumentScanner' && event.methodName === 'scanDocument' && event.success) {
         await saveRestoredScan(event.data);
       }
