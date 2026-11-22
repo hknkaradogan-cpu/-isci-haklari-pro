@@ -54,3 +54,16 @@ export const ReminderRepo = {
   remove(id) { write(STORAGE_KEYS.reminders, this.all().filter((r) => r.id !== id)); },
   replace(list) { write(STORAGE_KEYS.reminders, list); },
 };
+
+
+// ---- Taranan evrak deposu ----
+export const DocumentRepo = {
+  all() { return read(STORAGE_KEYS.documents, []); },
+  add(document) {
+    const list = this.all();
+    list.unshift({ id: uid(), createdAt: new Date().toISOString(), ...document });
+    write(STORAGE_KEYS.documents, list.slice(0, 200));
+    return list[0];
+  },
+  remove(id) { write(STORAGE_KEYS.documents, this.all().filter((d) => d.id !== id)); },
+};
