@@ -30,7 +30,7 @@ APK, GitHub'ın ücretsiz sunucularında otomatik olarak derlenir.
 Kodda değişiklik yapıp tekrar yüklediğinizde yeni APK kendiliğinden derlenir. Tüm sürümler aynı anahtarla imzalandığı için eski sürümün üzerine kurulur ve verileriniz korunur.
 
 ### Web sitesini yayınlamak (GitHub Pages)
-Deponun **Settings → Pages → Source** ayarında **GitHub Actions**'ı seçin. Sonraki derlemede site şu adreste yayına girer:
+Her derlemede site `gh-pages` dalına yüklenir. Bir kez deponun **Settings → Pages** ayarında **Branch: gh-pages / (root)** seçip kaydedin; site şu adreste yayına girer:
 `https://hknkaradogan-cpu.github.io/-isci-haklari-pro/`
 
 ---
