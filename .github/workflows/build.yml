@@ -68,7 +68,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
+      - run: npm install
       - run: npm run build
       - run: touch www/.nojekyll
       - uses: peaceiris/actions-gh-pages@v4
