@@ -18,6 +18,7 @@ export const TOOLS = [
   { route: 'history', title: 'Hesaplama Geçmişi', sub: 'Kaydet, düzenle, sil', ic: 'history' },
   { route: 'favorites', title: 'Favoriler', sub: 'Sık bakılanlar', ic: 'star' },
   { route: 'reports', title: 'PDF Raporlar', sub: 'Kaydet ve paylaş', ic: 'pdf' },
+  { route: 'documents', title: 'Evrak Tarama', sub: 'Kamerayla tara, PDF sakla', ic: 'pdf' },
   { route: 'reminders', title: 'Hatırlatıcılar', sub: 'Emeklilik, izin, mevzuat', ic: 'bell' },
   { route: 'settings', title: 'Ayarlar', sub: 'Tema, bildirim, hakkında', ic: 'settings' },
 ];
