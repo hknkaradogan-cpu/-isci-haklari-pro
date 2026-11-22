@@ -5,7 +5,7 @@ import { durationText } from '../../core/dates.js';
 import { fmtTL, esc } from '../../core/format.js';
 import { todayISO, icon } from '../../shared/ui.js';
 
-const ICONS = { severance: 'severance', notice: 'notice', leave: 'beach', overtime: 'clock' };
+const ICONS = { severance: 'severance', notice: 'notice', leave: 'beach', overtime: 'clock', holiday: 'flag', weekend: 'week' };
 
 export default defineCalculator({
   route: 'quit', title: 'İşten Ayrılırsam Ne Kadar Alırım?', icon: 'exit', accent: 'accent-hero',
@@ -18,6 +18,8 @@ export default defineCalculator({
     { id: 'leaveDays', label: 'Kullanılmayan izin günü', type: 'int', suffix: 'gün', required: false, placeholder: '0' },
     { id: 'overtimeHours', label: 'Ödenmemiş aylık fazla mesai', type: 'number', suffix: 'saat', required: false, placeholder: '0' },
     { id: 'overtimeMonths', label: 'Fazla mesai kaç aydır ödenmedi?', type: 'int', suffix: 'ay', required: false, placeholder: '1' },
+    { id: 'holidayDays', label: 'Ödenmeyen resmi tatil çalışması', type: 'int', suffix: 'gün', required: false, placeholder: '0' },
+    { id: 'weekendDays', label: 'Ödenmeyen hafta tatili çalışması', type: 'int', suffix: 'gün', required: false, placeholder: '0' },
   ],
   compute(i) {
     const r = calculateQuit({ ...i, overtimeMonths: i.overtimeMonths || 1 });
@@ -39,6 +41,8 @@ export default defineCalculator({
     if (r.notice) details.push(['İhbar brüt', r.notice.gross], ['İhbar gelir + damga vergisi', -(r.notice.incomeTax + r.notice.stamp), 'neg'], ['İhbar net', r.notice.net, 'total']);
     if (r.leave) details.push(['İzin brüt', r.leave.gross], ['İzin SGK + vergiler', -(r.leave.sgkCut + r.leave.incomeTax + r.leave.stamp), 'neg'], ['İzin net', r.leave.net, 'total']);
     if (r.overtime) details.push(['Fazla mesai brüt', r.overtime.gross], ['Fazla mesai SGK + vergiler', -(r.overtime.sgkCut + r.overtime.incomeTax + r.overtime.stamp), 'neg'], ['Fazla mesai net', r.overtime.net, 'total']);
+    if (r.holiday) details.push(['Resmi tatil mesaisi brüt', r.holiday.gross], ['Resmi tatil SGK + vergiler', -(r.holiday.sgkCut + r.holiday.incomeTax + r.holiday.stamp), 'neg'], ['Resmi tatil mesaisi net', r.holiday.net, 'total']);
+    if (r.weekend) details.push(['Hafta tatili mesaisi brüt', r.weekend.gross], ['Hafta tatili SGK + vergiler', -(r.weekend.sgkCut + r.weekend.incomeTax + r.weekend.stamp), 'neg'], ['Hafta tatili mesaisi net', r.weekend.net, 'total']);
     details.push(['Tahmini toplam alacak (brüt)', r.totalGross], ['Tahmini toplam alacak (net)', r.totalNet, 'total']);
 
     const notes = [{ tone: 'info', text: r.type.note }];
@@ -63,7 +67,7 @@ export default defineCalculator({
 
 function totalBar(items, total) {
   if (!(total > 0)) return '';
-  const colors = ['var(--primary)', 'var(--secondary)', 'var(--success)', 'var(--warning)'];
+  const colors = ['var(--primary)', 'var(--secondary)', 'var(--success)', 'var(--warning)', '#D81B60', '#6A1B9A'];
   return `<div class="stack-bar" role="img" aria-label="Alacak dağılımı">${items.filter((x) => x.net > 0).map((x) => `<span style="width:${(x.net / total) * 100}%;background:${colors[items.indexOf(x)]}" title="${esc(x.label)}"></span>`).join('')}</div>
     <div class="legend">${items.filter((x) => x.net > 0).map((x) => `<span><i style="background:${colors[items.indexOf(x)]}"></i>${esc(x.label)} %${Math.round((x.net / total) * 100)}</span>`).join('')}</div>`;
 }
