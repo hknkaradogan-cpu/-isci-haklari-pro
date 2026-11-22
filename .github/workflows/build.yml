@@ -26,7 +26,7 @@ jobs:
           java-version: 21
 
       - name: Bağımlılıkları kur
-        run: npm ci
+        run: npm install
 
       - name: Web uygulamasını derle ve Android'e kopyala
         run: npm run android:sync
