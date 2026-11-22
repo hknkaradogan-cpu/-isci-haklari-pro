@@ -1,0 +1,88 @@
+name: APK ve Web Sitesi Derle
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  apk:
+    name: Android APK
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - uses: android-actions/setup-android@v3
+
+      - name: Bağımlılıkları kur
+        run: npm ci
+
+      - name: Web uygulamasını derle ve Android'e kopyala
+        run: npm run android:sync
+
+      - name: APK derle
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleRelease --no-daemon --stacktrace
+
+      - name: APK dosyasını adlandır
+        run: |
+          mkdir -p out
+          cp android/app/build/outputs/apk/release/app-release.apk "out/IsciHaklariPro-v1.0.${{ github.run_number }}.apk"
+          ls -la out
+
+      - name: APK'yı yükle (Actions sekmesi)
+        uses: actions/upload-artifact@v4
+        with:
+          name: IsciHaklariPro-APK
+          path: out/*.apk
+
+      - name: Telefondan indirilebilir sürüm (Releases)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          name: İşçi Hakları Pro v1.0.${{ github.run_number }}
+          body: |
+            Telefonunuza kurmak için aşağıdaki **.apk** dosyasına dokunun, indirin ve açın.
+            İlk kurulumda "Bilinmeyen kaynaklardan uygulama yükleme" iznini vermeniz istenebilir.
+          files: out/*.apk
+
+  web:
+    name: Web sitesi (GitHub Pages)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: www
+      - id: deploy
+        uses: actions/deploy-pages@v4

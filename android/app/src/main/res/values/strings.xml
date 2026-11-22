@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">İşçi Hakları Pro</string>
+    <string name="title_activity_main">İşçi Hakları Pro</string>
+    <string name="package_name">com.iscihaklari.pro</string>
+    <string name="custom_url_scheme">com.iscihaklari.pro</string>
+</resources>

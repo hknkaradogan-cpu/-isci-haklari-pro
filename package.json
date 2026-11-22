@@ -1,0 +1,30 @@
+{
+  "name": "isci-haklari-pro",
+  "version": "1.0.0",
+  "description": "İşçi Hakları Pro — kıdem, ihbar, izin ve fazla mesai hesaplayıcı (web + Android)",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "icons": "node scripts/make-icons.mjs && npx capacitor-assets generate --android --iconBackgroundColor \"#1565C0\" --splashBackgroundColor \"#1565C0\"",
+    "android:sync": "npm run build && npx cap sync android",
+    "android:apk": "npm run android:sync && cd android && ./gradlew assembleRelease"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@capacitor/android": "^7.6.10",
+    "@capacitor/app": "^7.1.2",
+    "@capacitor/cli": "^7.6.10",
+    "@capacitor/core": "^7.6.10",
+    "@capacitor/filesystem": "^7.1.9",
+    "@capacitor/local-notifications": "^7.0.7",
+    "@capacitor/share": "^7.0.4",
+    "@expo-google-fonts/roboto": "^0.4.3",
+    "esbuild": "^0.28.2",
+    "jspdf": "^2.5.2"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^4.0.0"
+  },
+  "private": true
+}

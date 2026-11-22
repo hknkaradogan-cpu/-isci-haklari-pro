@@ -1,0 +1,15 @@
+{
+  "appId": "com.iscihaklari.pro",
+  "appName": "İşçi Hakları Pro",
+  "webDir": "www",
+  "android": {
+    "adjustMarginsForEdgeToEdge": "force",
+    "backgroundColor": "#1565C0"
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_notify",
+      "iconColor": "#1565C0"
+    }
+  }
+}
